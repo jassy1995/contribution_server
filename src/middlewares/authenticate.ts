@@ -21,7 +21,7 @@ const admin = async (c: Context, next: Next) => {
     if (!authorization) return c.json({ success: false, message: 'Not authorized' }, 401);
     const token = authorization.replace(/Bearer /gi, '');
     const decoded: any = await verifyToken(token);
-    if (![UserRoles.ADMIN, UserRoles.STAFF].includes(decoded.role)) {
+    if (![UserRoles.ADMIN].includes(decoded.role)) {
       return c.json({ success: false, message: 'Not authorized' }, 401);
     }
     c.set('user', decoded);
