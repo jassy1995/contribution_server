@@ -1,0 +1,44 @@
+{
+  "name": "contribution-api",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/app.ts",
+    "start": "bun src/app.ts",
+    "build": "bun build src/app.ts --outdir ./dist --target bun",
+    "test": "bun test",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --write",
+    "format": "biome format --write .",
+    "check": "biome check . --write"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.74.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.991.0",
+    "@aws-sdk/client-s3": "^3.991.0",
+    "@aws-sdk/client-ses": "^3.991.0",
+    "@logtail/node": "^0.5.6",
+    "@logtail/winston": "^0.5.6",
+    "bcryptjs": "^3.0.3",
+    "common-tags": "^1.8.2",
+    "date-fns": "^4.1.0",
+    "elevenlabs": "^1.59.0",
+    "googleapis": "^171.4.0",
+    "handlebars": "^4.7.8",
+    "hono": "4.11.9",
+    "mongoose": "8",
+    "openai": "^6.22.0",
+    "sharp": "^0.34.5",
+    "simple-oauth2": "^5.1.0",
+    "socket.io": "^4.8.3",
+    "winston": "^3.19.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.1",
+    "@types/bun": "latest",
+    "@types/common-tags": "^1.8.4",
+    "@types/sharp": "^0.32.0",
+    "@types/simple-oauth2": "^5.0.8"
+  }
+}

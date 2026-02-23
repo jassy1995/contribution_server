@@ -1,0 +1,13 @@
+# flyctl launch added from .gitignore
+### Deno template
+.idea
+.vscode
+
+node_modules
+
+**\.env
+**\*.orig
+**\*.pyc
+**\*.swp
+
+fly.toml
