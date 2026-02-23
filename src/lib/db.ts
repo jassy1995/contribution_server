@@ -3,12 +3,15 @@ import logger from './logger.ts';
 
 const uri = process.env.DB_CONNECTION_STRING_MAIN;
 
-if (!uri) {
-  throw new Error('DB_CONNECTION_STRING_MAIN environment variable is not defined');
-}
-
 const main = new Mongoose();
-main.connect(uri).then(() => logger.info('🛢️ Main db connected'));
+if (uri) {
+  main
+    .connect(uri)
+    .then(() => logger.info('🛢️ Main db connected'))
+    .catch((e) => logger.error(`DB connect error: ${e.message}`));
+} else {
+  logger.error('DB_CONNECTION_STRING_MAIN environment variable is not defined');
+}
 
 export default {
   main,
