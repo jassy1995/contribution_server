@@ -2,11 +2,13 @@ export const config = { runtime: 'nodejs' };
 
 import { Hono } from 'hono';
 import { handle } from 'hono/vercel';
-import routes from '../src/routes/index.ts';
-import '../src/lib/db.ts';
-import _logger from '../src/lib/logger.ts';
+import routes from '../src/routes/index';
+import '../src/lib/db';
+import _logger from '../src/lib/logger';
 
 const app = new Hono();
+
+app.get('/health', (c) => c.json({ ok: true }));
 
 app.route('/', routes);
 
