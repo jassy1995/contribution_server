@@ -2,9 +2,9 @@ export const config = { runtime: 'nodejs' };
 
 import { Hono } from 'hono';
 import { handle } from 'hono/vercel';
-import routes from '../src/routes/index';
-import '../src/lib/db';
-import _logger from '../src/lib/logger';
+import routes from '../src/routes/index.js';
+import '../src/lib/db.js';
+import _logger from '../src/lib/logger.js';
 
 const app = new Hono();
 
