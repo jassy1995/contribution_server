@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun --watch src/app.ts",
-    "start": "bun src/app.ts",
+    "start": "node src/app.ts",
     "build": "bun build src/app.ts --outdir ./dist --target bun",
     "test": "bun test",
     "lint": "biome check .",

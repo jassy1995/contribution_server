@@ -6,7 +6,9 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "maxSize": 40000000,
+    "includes": ["src/**", "api/**", "*.json"]
   },
   "formatter": {
     "enabled": true,

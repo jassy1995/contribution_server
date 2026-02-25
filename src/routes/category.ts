@@ -1,9 +1,8 @@
-/** biome-ignore-all assist/source/organizeImports: <explanation> */
 import { Hono } from 'hono';
-import validate from '../middlewares/validate.ts';
-import { createCategorySchema, updateCategorySchema } from '../schemas/category.ts';
 import CategoryController from '../controllers/category.ts';
 import authenticate from '../middlewares/authenticate.ts';
+import validate from '../middlewares/validate.ts';
+import { createCategorySchema, updateCategorySchema } from '../schemas/category.ts';
 
 const router = new Hono();
 

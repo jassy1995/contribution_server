@@ -16,24 +16,35 @@ app.notFound((c: Context) => {
 });
 app.onError((err: Error, c: Context) => {
   _logger.error(err.message);
-  return c.json({ success: false, message: err.message, stack: err.stack }, 500);
+  const payload: { success: false; message: string; stack?: string } = {
+    success: false,
+    message: err.message,
+  };
+  if (process.env.NODE_ENV !== 'production') {
+    payload.stack = err.stack;
+  }
+  return c.json(payload, 500);
 });
 
 const port = +(process.env.PORT || 2002);
 
-const server = Bun.serve({
-  port,
-  fetch: app.fetch,
-});
+if (import.meta.main && typeof Bun !== 'undefined') {
+  const server = Bun.serve({
+    port,
+    fetch: app.fetch,
+  });
 
-console.log(`Server running on port ${port}`);
+  console.log(`Server running on port ${port}`);
 
-async function graceful() {
-  server.stop();
-  await db.main.connection.close();
-  _logger.info('Shutdown gracefully');
-  process.exit(0);
+  async function graceful() {
+    server.stop();
+    await db.main.connection.close();
+    _logger.info('Shutdown gracefully');
+    process.exit(0);
+  }
+
+  process.on('SIGTERM', graceful);
+  process.on('SIGINT', graceful);
 }
 
-process.on('SIGTERM', graceful);
-process.on('SIGINT', graceful);
+export default app;
