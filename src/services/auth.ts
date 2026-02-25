@@ -1,5 +1,4 @@
 import { google } from 'googleapis';
-import UserService from './user.ts';
 
 const AuthService = {
   getGoogleUserInfo(accessToken: string) {
