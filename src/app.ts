@@ -1,9 +1,9 @@
 import { type Context, Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
-import db from './lib/db.ts';
-import _logger from './lib/logger.ts';
-import routes from './routes/index.ts';
+import db from './lib/db';
+import _logger from './lib/logger';
+import routes from './routes/index';
 
 const app = new Hono();
 
@@ -29,10 +29,7 @@ app.onError((err: Error, c: Context) => {
 const port = +(process.env.PORT || 2002);
 
 if (import.meta.main && typeof Bun !== 'undefined') {
-  // const server = Bun.serve({
-  //   port,
-  //   fetch: app.fetch,
-  // });
+ 
 
   console.log(`Server running on port ${port}`);
 
@@ -48,6 +45,14 @@ if (import.meta.main && typeof Bun !== 'undefined') {
 }
 
 export default app;
+
+
+ // const server = Bun.serve({
+  //   port,
+  //   fetch: app.fetch,
+  // });
+
+
 
 
 // import { Hono } from 'hono';

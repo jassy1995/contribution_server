@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ContributionStatus } from '../config/constants.ts';
+import { ContributionStatus } from '../config/constants';
 
 export const createContributionSchema = z.object({
   amount: z.number().min(0),

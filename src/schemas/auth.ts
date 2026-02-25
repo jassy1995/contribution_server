@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { UserRoles } from '../config/constants.ts';
+import { UserRoles } from '../config/constants';
 
 export const signUpSchema = z.object({
   firstName: z.string(),
