@@ -22,7 +22,7 @@ const TransactionDao = {
       filter.transactionDate = { $gte: start, $lte: end };
     }
     const skip = page * limit - limit;
-    return Transaction.find(filter).populate('creator').sort('-updatedAt').skip(skip).limit(limit);
+    return Transaction.find(filter).populate('creator').sort('-transactionDate').skip(skip).limit(limit);
   },
   getCount(args: any) {
     const { ...params } = args;

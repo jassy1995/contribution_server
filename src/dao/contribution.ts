@@ -24,7 +24,7 @@ const ContributionDao = {
     return Contribution.find(filter)
       .populate('category')
       .populate('contributor')
-      .sort('-updatedAt')
+      .sort('-collectedAt')
       .skip(skip)
       .limit(limit);
   },

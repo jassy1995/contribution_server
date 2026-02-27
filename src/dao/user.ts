@@ -21,7 +21,7 @@ const UserDao = {
       ];
     }
     const skip = page * limit - limit;
-    return User.find(params).populate('category').limit(limit).skip(skip).exec();
+    return User.find(params).populate('category').sort('-createdAt').limit(limit).skip(skip).exec();
   },
   getCount({ search, role, status, category }: any = {}) {
     const params: any = {};
