@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import auth from './auth.ts';
 import category from './category.ts';
+import chat from './chat.ts';
 import contribution from './contribution.ts';
 import transaction from './transaction.ts';
 import user from './user.ts';
@@ -12,5 +13,6 @@ router.route('/transactions', transaction);
 router.route('/users', user);
 router.route('/auth', auth);
 router.route('/categories', category);
+router.route('/chat', chat);
 
 export default router;

@@ -12,3 +12,5 @@ export const UserRoles = {
   USER: 'user',
   ADMIN: 'admin',
 } as const;
+
+export const MAX_TOOL_ITERATIONS = 10;

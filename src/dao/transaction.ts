@@ -1,4 +1,4 @@
-import { endOfMonth, startOfMonth } from 'date-fns';
+import { endOfMonth, endOfYear, startOfMonth, startOfYear } from 'date-fns';
 import { isValidObjectId } from 'mongoose';
 import Transaction from '../models/transaction.ts';
 import type {
@@ -6,6 +6,24 @@ import type {
   GetTransactionParams,
   UpdateTransactionBody,
 } from '../schemas/transaction.ts';
+
+const capToNow = (date: Date): Date => (date > new Date() ? new Date() : date);
+
+const buildTransactionDateFilter = (month?: number, year?: number) => {
+  if (month && year) {
+    const start = startOfMonth(new Date(year, month - 1, 1));
+    const end = capToNow(endOfMonth(start));
+    return { $gte: start, $lte: end };
+  }
+
+  if (year) {
+    const start = startOfYear(new Date(year, 0, 1));
+    const end = capToNow(endOfYear(start));
+    return { $gte: start, $lte: end };
+  }
+
+  return undefined;
+};
 
 const TransactionDao = {
   create(data: CreateTransactionBody & { creator: string }) {
@@ -16,11 +34,8 @@ const TransactionDao = {
     const filter: any = {};
     if (params.type) filter.type = params.type;
     if (params.search) filter.description = { $regex: params.search, $options: 'i' };
-    if (params.month && params.year) {
-      const start = startOfMonth(new Date(params.year, params.month - 1, 1));
-      const end = endOfMonth(start);
-      filter.transactionDate = { $gte: start, $lte: end };
-    }
+    const transactionDate = buildTransactionDateFilter(params.month, params.year);
+    if (transactionDate) filter.transactionDate = transactionDate;
     const skip = page * limit - limit;
     return Transaction.find(filter).populate('creator').sort('-transactionDate').skip(skip).limit(limit);
   },
@@ -29,11 +44,8 @@ const TransactionDao = {
     const filter: any = {};
     if (params.type) filter.type = params.type;
     if (params.search) filter.description = { $regex: params.search, $options: 'i' };
-    if (params.month && params.year) {
-      const start = startOfMonth(new Date(params.year, params.month - 1, 1));
-      const end = endOfMonth(start);
-      filter.transactionDate = { $gte: start, $lte: end };
-    }
+    const transactionDate = buildTransactionDateFilter(params.month, params.year);
+    if (transactionDate) filter.transactionDate = transactionDate;
     return Transaction.countDocuments(filter);
   },
   getSum(args: any) {
@@ -41,11 +53,8 @@ const TransactionDao = {
     const match: any = {};
     if (params.type) match.type = params.type;
     if (params.search) match.description = { $regex: params.search, $options: 'i' };
-    if (params.month && params.year) {
-      const start = startOfMonth(new Date(params.year, params.month - 1, 1));
-      const end = endOfMonth(start);
-      match.transactionDate = { $gte: start, $lte: end };
-    }
+    const transactionDate = buildTransactionDateFilter(params.month, params.year);
+    if (transactionDate) match.transactionDate = transactionDate;
     return Transaction.aggregate([
       { $match: match },
       { $group: { _id: null, total: { $sum: '$transactionAmount' } } },
